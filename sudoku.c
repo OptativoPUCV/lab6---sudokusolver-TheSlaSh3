@@ -42,12 +42,7 @@ void print_node(Node* n){
     }
     printf("\n");
 }
-/*2.Cree la función int is_valid(Node * n), para validar si un estado/nodo es válido (cumple con las restricciones del problema). Debe validar que:
 
-No se repitan números en las filas
-No se repitan números en las columnas
-No se repitan números en las submatrices de 3x3
-Si el estado es válido la función retorna 1, si no lo es retorna 0.*/
 int is_valid(Node *n) {
     int row_check[9][9] = {0};
     int col_check[9][9] = {0};
@@ -57,7 +52,7 @@ int is_valid(Node *n) {
         for (int j = 0; j < 9; j++) {
             int num = n->sudo[i][j];
             if (num != 0) {
-                num--;  // Decrementar num para usarlo como índice (0-8)
+                num--;  // Decrementar num 
 
                 // Verificar filas
                 if (row_check[i][num]) {
@@ -84,11 +79,6 @@ int is_valid(Node *n) {
     return 1;
 }
 
-/*
-1.Cree una función que a partir de un nodo genere una lista con los nodos adyacentes:
-
-Recuerde que los nodos adyacentes son generados aplicando las acciones al estado actual.
-*/
 List* get_adj_nodes(Node* n){
     List* list=createList();
     int i,j;
@@ -108,8 +98,15 @@ List* get_adj_nodes(Node* n){
 }
 
 
-int is_final(Node* n){
-    return 0;
+int is_final(Node *n) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (n->sudo[i][j] == 0) {
+                return 0;
+            }
+        }
+    }
+    return 1;
 }
 
 Node* DFS(Node* initial, int* cont){
