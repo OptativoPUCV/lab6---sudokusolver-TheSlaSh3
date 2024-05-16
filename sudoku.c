@@ -79,21 +79,40 @@ int is_valid(Node *n) {
     return 1;
 }
 
-List* get_adj_nodes(Node* n){
-    List* list=createList();
-    int i,j;
-    for(i=0;i<9;i++)
-    {
-        for(j=0;j<9;j++)
-        {
-            if(n->sudo[i][j]==0)
-            {
-                Node* adj=copy(n);
-                adj->sudo[i][j]=1;
-                pushBack(list,adj);
+List* get_adj_nodes(Node* n) {
+    List* list = createList();
+    int row, col;
+
+    // Encontrar la primera casilla vacía
+    int found = 0;
+    for (row = 0; row < 9; row++) {
+        for (col = 0; col < 9; col++) {
+            if (n->sudo[row][col] == 0) {
+                found = 1;
+                break;
             }
         }
+        if (found) {
+            break;
+        }
     }
+    // Si no hay celdas vacías, retornamos la lista vacía
+    if (!found) {
+        return list;
+    }
+
+    // Generar nuevos nodos cambiando la casilla vacía por los valores 1-9
+    for (int num = 1; num <= 9; num++) {
+        Node* newNode = copy(n);
+        if (newNode == NULL) {
+            // Manejar el error de asignación de memoria
+            clean(list);
+            return NULL;
+        }
+        newNode->sudo[row][col] = num;
+        pushBack(list, newNode);
+    }
+
     return list;
 }
 
