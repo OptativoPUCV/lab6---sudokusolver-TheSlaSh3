@@ -48,9 +48,25 @@ int is_valid(Node* n){
     return 1;
 }
 
+/*
+1.Cree una función que a partir de un nodo genere una lista con los nodos adyacentes:
 
+Recuerde que los nodos adyacentes son generados aplicando las acciones al estado actual.
+
+*/
 List* get_adj_nodes(Node* n){
     List* list=createList();
+    int i,j;
+    for(i=0;i<9;i++){
+        for(j=0;j<9;j++){
+            if(n->sudo[i][j]==0{
+                Node* adj=copy(n);
+                adj->sudo[i][j]=1;
+                pushBack(list,adj);
+            }
+        }
+       
+    }
     return list;
 }
 
