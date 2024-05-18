@@ -110,7 +110,13 @@ List* get_adj_nodes(Node* n) {
             return NULL;
         }
         newNode->sudo[row][col] = num;
-        pushBack(list, newNode);
+
+        // Solo agregar el nodo si es válido
+        if (is_valid(newNode)) {
+            pushBack(list, newNode);
+        } else {
+            free(newNode);
+        }
     }
 
     return list;
