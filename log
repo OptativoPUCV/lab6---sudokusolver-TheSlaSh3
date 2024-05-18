@@ -64,3 +64,22 @@ Sat 18 May 2024 10:30:35 PM UTC:
  tests:  6|2
 total_score: 45/70
 008a64d
+Sat 18 May 2024 10:30:58 PM UTC: 
+ sudoku.c | 45 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
+In file included from test.c:5:
+sudoku.c: In function ‘DFS’:
+sudoku.c:160:17: error: ‘Node’ has no member named ‘is_goal’
+  160 |         if (node->is_goal) { // Verificar si el nodo es un estado final
+      |                 ^~
+sudoku.c:167:33: error: ‘Node’ has no member named ‘num_neighbors’
+  167 |         for (int i = 0; i < node->num_neighbors; i++) {
+      |                                 ^~
+sudoku.c:168:29: error: ‘Node’ has no member named ‘neighbors’
+  168 |             push(stack, node->neighbors[i]); // Agregar los nodos adyacentes al stack
+      |                             ^~
+sudoku.c:173:18: error: ‘Node’ has no member named ‘neighbors’
+  173 |         free(node->neighbors); // Liberar la memoria de los vecinos
+      |                  ^~
+Compilation failed
+06bf8f5

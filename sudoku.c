@@ -145,25 +145,38 @@ d) Agregue los nodos de la lista (uno por uno) al stack S.
 e) Libere la memoria usada por el nodo.
 
 Si terminó de recorre el grafo sin encontrar una solución, retorne NULL.*/
-Node* DFS(Node* initial, int* cont)
-{
-    Stack* S = createStack();
-    push(S, initial);
-    while (!is_empty(S)){
-        Node* n = top(S);
-        pop(S);
-        if (is_final(n)){
-            return n;
+Node* DFS(Node* initial, int* cont) {
+    if (!initial) return NULL; // Retorna NULL si el nodo inicial es NULL
+
+    Stack* stack = createStack(); // Crear un stack
+    push(stack, initial); // Insertar el nodo inicial en el stack
+
+    while (!is_empty(stack)) { // Mientras el stack no esté vacío
+        Node* node = (Node*) top(stack); // Obtener el primer nodo del stack
+        pop(stack); // Eliminar el primer nodo del stack
+
+        (*cont)++; // Incrementar el contador en cada iteración
+
+        if (node->is_goal) { // Verificar si el nodo es un estado final
+            clean(stack); // Liberar la memoria del stack antes de retornar
+            free(stack); // Liberar el stack
+            return node; // Retornar el nodo si es un estado final
         }
-        List* list = get_adj_nodes(n);
-        Node* aux = first(list);
-        while (aux){
-            push(S, aux);
-            aux = next(list);
+
+        // Obtener la lista de nodos adyacentes al nodo
+        for (int i = 0; i < node->num_neighbors; i++) {
+            push(stack, node->neighbors[i]); // Agregar los nodos adyacentes al stack
         }
-        free(n);
+
+        // Liberar la memoria usada por el nodo (si es necesario)
+        // free(node->data); // Descomentar si es necesario liberar la memoria de data
+        free(node->neighbors); // Liberar la memoria de los vecinos
+        free(node); // Liberar la memoria del nodo
     }
-    return NULL;
+
+    clean(stack); // Liberar la memoria del stack si no se encontró una solución
+    free(stack); // Liberar el stack
+    return NULL; // Retornar NULL si no se encontró una solución
 }
 
 
