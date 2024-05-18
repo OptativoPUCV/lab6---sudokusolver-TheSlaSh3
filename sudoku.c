@@ -157,21 +157,26 @@ Node* DFS(Node* initial, int* cont) {
 
         (*cont)++; // Incrementar el contador en cada iteración
 
-        if (node->is_goal) { // Verificar si el nodo es un estado final
+        if (is_goal(node)) { // Verificar si el nodo es un estado final
             clean(stack); // Liberar la memoria del stack antes de retornar
             free(stack); // Liberar el stack
             return node; // Retornar el nodo si es un estado final
         }
 
         // Obtener la lista de nodos adyacentes al nodo
-        for (int i = 0; i < node->num_neighbors; i++) {
-            push(stack, node->neighbors[i]); // Agregar los nodos adyacentes al stack
+        List* neighbors = get_neighbors(node);
+
+        // Agregar los nodos adyacentes al stack
+        for (Node* neighbor = (Node*) first(neighbors); neighbor != NULL; neighbor = (Node*) next(neighbors)) {
+            push(stack, neighbor);
         }
 
+        // Limpiar la lista de vecinos
+        clean(neighbors);
+        free(neighbors);
+
         // Liberar la memoria usada por el nodo (si es necesario)
-        // free(node->data); // Descomentar si es necesario liberar la memoria de data
-        free(node->neighbors); // Liberar la memoria de los vecinos
-        free(node); // Liberar la memoria del nodo
+        // free(node); // Descomentar si es necesario liberar la memoria del nodo
     }
 
     clean(stack); // Liberar la memoria del stack si no se encontró una solución

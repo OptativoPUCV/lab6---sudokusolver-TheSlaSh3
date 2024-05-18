@@ -83,3 +83,18 @@ sudoku.c:173:18: error: ‘Node’ has no member named ‘neighbors’
       |                  ^~
 Compilation failed
 06bf8f5
+Sat 18 May 2024 10:31:58 PM UTC: 
+ sudoku.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+In file included from test.c:5:
+sudoku.c: In function ‘DFS’:
+sudoku.c:160:13: error: implicit declaration of function ‘is_goal’ [-Werror=implicit-function-declaration]
+  160 |         if (is_goal(node)) { // Verificar si el nodo es un estado final
+      |             ^~~~~~~
+sudoku.c:167:27: error: implicit declaration of function ‘get_neighbors’ [-Werror=implicit-function-declaration]
+  167 |         List* neighbors = get_neighbors(node);
+      |                           ^~~~~~~~~~~~~
+sudoku.c:167:27: error: initialization of ‘List *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+cc1: all warnings being treated as errors
+Compilation failed
+f85b0a5
