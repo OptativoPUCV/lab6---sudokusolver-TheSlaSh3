@@ -145,43 +145,25 @@ d) Agregue los nodos de la lista (uno por uno) al stack S.
 e) Libere la memoria usada por el nodo.
 
 Si terminó de recorre el grafo sin encontrar una solución, retorne NULL.*/
-Node* DFS(Node* initial, int* cont) {
-    if (!initial) return NULL; // Retorna NULL si el nodo inicial es NULL
-
-    Stack* stack = createStack(); // Crear un stack
-    push(stack, initial); // Insertar el nodo inicial en el stack
-
-    while (!is_empty(stack)) { // Mientras el stack no esté vacío
-        Node* node = (Node*) top(stack); // Obtener el primer nodo del stack
-        pop(stack); // Eliminar el primer nodo del stack
-
-        (*cont)++; // Incrementar el contador en cada iteración
-
-        if (is_goal(node)) { // Verificar si el nodo es un estado final
-            clean(stack); // Liberar la memoria del stack antes de retornar
-            free(stack); // Liberar el stack
-            return node; // Retornar el nodo si es un estado final
+Node* DFS(Node* initial, int* cont)
+{
+    Stack* S = createStack();
+    push(S, initial);
+    while (!is_empty(S)){
+        Node* n = top(S);
+        pop(S);
+        if (is_final(n)){
+            return n;
         }
-
-        // Obtener la lista de nodos adyacentes al nodo
-        List* neighbors = get_neighbors(node);
-
-        // Agregar los nodos adyacentes al stack
-        for (Node* neighbor = (Node*) first(neighbors); neighbor != NULL; neighbor = (Node*) next(neighbors)) {
-            push(stack, neighbor);
+        List* list = get_adj_nodes(n);
+        Node* aux = first(list);
+        while (aux){
+            push(S, aux);
+            aux = next(list);
         }
-
-        // Limpiar la lista de vecinos
-        clean(neighbors);
-        free(neighbors);
-
-        // Liberar la memoria usada por el nodo (si es necesario)
-        // free(node); // Descomentar si es necesario liberar la memoria del nodo
+        free(n);
     }
-
-    clean(stack); // Liberar la memoria del stack si no se encontró una solución
-    free(stack); // Liberar el stack
-    return NULL; // Retornar NULL si no se encontró una solución
+    return NULL;
 }
 
 
